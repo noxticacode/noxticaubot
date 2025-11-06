@@ -35,10 +35,11 @@ class MSG:
 <b>💳 ᴍᴏᴛᴏᴅᴇ ᴘᴇᴍʙᴀʏᴀʀᴀɴ:</b>
  <b>├ <a href=https://files.catbox.moe/4gpu0u.jpg>Qris</a></b>
  <b>└ ᴅ ᴧ ɴ ᴧ: <code> 081398871823 </code> </b>
+ 
 <b>🔖 ᴛᴏᴛᴀʟ ʜᴀʀɢᴀ: ʀᴘ {total}.000</b>
 <b>🗓️ ᴛᴏᴛᴀʟ ʙᴜʟᴀɴ: {bulan}</b> 
 
-OWNER BOT : <a href=tg://openmessage?user_id={OWNER_ID}>@ibradecode</a> 
+OWNER BOT : <a href=tg://openmessage?user_id={OWNER_ID}>@MasterHereXP</a> 
 
 <b>🛍 ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴋᴏɴꜰɪʀᴍᴀsɪ ᴜɴᴛᴜᴋ ᴋɪʀɪᴍ ʙᴜᴋᴛɪ ᴘᴇᴍʙᴀʏᴀʀᴀɴ ᴀɴᴅᴀ</b></blockquote>
 """
