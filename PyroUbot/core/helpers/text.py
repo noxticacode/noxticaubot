@@ -18,10 +18,10 @@ class MSG:
 
 <b> 📚💎@{bot.me.username} ᴀᴅᴀʟᴀʜ ʙᴏᴛ ʏᴀɴɢ ᴅᴀᴘᴀᴛ ᴍᴇᴍʙᴜᴀᴛ ᴜsᴇʀʙᴏᴛ ᴅᴇɴɢᴀɴ ᴍᴜᴅᴀʜ</b>
 
-🚀ʙᴏᴛ ɪɴɪ ᴅɪᴋᴇᴍʙᴀɴɢᴋᴀɴ ᴏʟᴇʜ <a href=tg://openmessage?user_id={OWNER_ID}>@ibradecode</a> ᴊɪᴋᴀ ᴀᴅᴀ ᴋᴇsᴀʟᴀʜᴀɴ ᴀᴛᴀᴜᴘᴜɴ ᴍᴀsᴀʟᴀʜ ᴅᴍ ᴏᴡɴᴇʀ ʙᴏᴛ ʏᴀɪᴛᴜ: <a href=tg://openmessage?user_id={OWNER_ID}>@ibradecode</a>
+🚀ʙᴏᴛ ɪɴɪ ᴅɪᴋᴇᴍʙᴀɴɢᴋᴀɴ ᴏʟᴇʜ <a href=https://t.me/Noxtica>Noxtica</a> ᴊɪᴋᴀ ᴀᴅᴀ ᴋᴇsᴀʟᴀʜᴀɴ ᴀᴛᴀᴜᴘᴜɴ ᴍᴀsᴀʟᴀʜ ᴅᴍ ᴏᴡɴᴇʀ ʙᴏᴛ ʏᴀɪᴛᴜ: <a href=tg://openmessage?user_id={OWNER_ID}>@MasterHereXp</a>
 
 ᴛᴏᴛᴀʟ ᴘᴇɴɢɢᴜɴᴀ ᴜʙᴏᴛ: {len(ubot._ubot)} 
-ᴏᴡɴᴇʀ ᴜʙᴏᴛ: <a href=tg://openmessage?user_id={OWNER_ID}>Ibra Decode</a>
+ᴏᴡɴᴇʀ ᴜʙᴏᴛ: <a href=tg://openmessage?user_id={OWNER_ID}>Master</a>
 
 <u>ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ᴜɴᴛᴜᴋ ᴍᴇᴍʙᴜᴀᴛ ᴜsᴇʀʙᴏᴛ</u></b></blockquote>
 """
@@ -50,5 +50,5 @@ OWNER BOT : <a href=tg://openmessage?user_id={OWNER_ID}>@ibradecode</a>
 """
 
     def POLICY():
-        return """ <blockquote><b>ᴊɪᴋᴀ ᴀᴅᴀ ᴋᴇɴᴅᴀʟᴀ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ  <a href=tg://openmessage?user_id={OWNER_ID}>@ibradecode</a></b></blockquote>
+        return """ <blockquote><b>ᴊɪᴋᴀ ᴀᴅᴀ ᴋᴇɴᴅᴀʟᴀ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ  <a href=tg://openmessage?user_id={OWNER_ID}>@MasterHereXP</a></b></blockquote>
 """
