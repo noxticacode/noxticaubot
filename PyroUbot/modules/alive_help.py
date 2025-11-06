@@ -67,7 +67,7 @@ async def _(client, inline_query):
 ᚗ peer_users: {users} users
 ᚗ peer_group: {group} group
 ᚗ start_uptime: {uptime}</blockquote>
-        <blockquote><b>ᣃ࿈ ᴜsᴇʀʙᴏᴛ ࿈ᣄ</b></blockquote>
+        <blockquote><b>ɴ ᴏ x ᴛ ɪ ᴄ ᴧ   ᴄ ᴏ ᴅ ᴇ</b></blockquote>
 """
             await client.answer_inline_query(
                 inline_query.id,
@@ -189,7 +189,7 @@ async def help_callback(client, callback_query):
         button = [[InlineKeyboardButton("♅ ʙᴀᴄᴋ ♅", callback_data="help_back")]]
         await callback_query.edit_message_text(
             text=text 
-            + '\n<blockquote><b>ᣃ࿈ ᴜsᴇʀʙᴏᴛ ᴘʀᴇᴍɪᴜᴍ ࿈ᣄ</a> </b></blockquote>',
+            + '\n<blockquote><b>ɴ ᴏ x ᴛ ɪ ᴄ ᴧ   ᴄ ᴏ ᴅ ᴇ</a> </b></blockquote>',
             reply_markup=InlineKeyboardMarkup(button),
             disable_web_page_preview=True,
         )
