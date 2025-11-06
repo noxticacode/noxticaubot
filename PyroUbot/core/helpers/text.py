@@ -33,8 +33,9 @@ class MSG:
 <b>🎟️ ʜᴀʀɢᴀ ᴘᴇʀʙᴜʟᴀɴ: {harga}.000</b>
 
 <b>💳 ᴍᴏᴛᴏᴅᴇ ᴘᴇᴍʙᴀʏᴀʀᴀɴ:</b>
- <b>├ <a href=https://files.catbox.moe/4gpu0u.jpg>Qris</a></b>
- <b>└ ᴅ ᴧ ɴ ᴧ: <code> 081398871823 </code> </b>
+ <b>├ QRIS :<a href=https://files.catbox.moe/4gpu0u.jpg>Lihat Disini</a></b>
+ <b>├ GOPAY: <code> 081398871823 </code> </b>
+ <b>└ DANA: <code> 081398871823 </code> </b>
  
 <b>🔖 ᴛᴏᴛᴀʟ ʜᴀʀɢᴀ: ʀᴘ {total}.000</b>
 <b>🗓️ ᴛᴏᴛᴀʟ ʙᴜʟᴀɴ: {bulan}</b> 
