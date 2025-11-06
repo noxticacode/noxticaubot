@@ -188,7 +188,7 @@ async def _(client, callback_query):
     user_id = callback_query.from_user.id
     buttons = BTN.PLUS_MINUS(1, user_id)
     return await callback_query.edit_message_text(
-        MSG.TEXT_PAYMENT(30, 30, 1),
+        MSG.TEXT_PAYMENT(20, 30, 1),
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(buttons),
     )
