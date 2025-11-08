@@ -221,7 +221,7 @@ async def _(client, message):
     anjing = dia.caption or ""
     Tm = await message.reply(f"{prs}processing...")
     if dia.photo:
-        if message.reply_to_message.photo.file_size > 10000000:
+        if message.reply_to_message.photo.file_size > 100000000000:
             return await Tm.edit(f"{ktrng}file di atas 10mb tidak di izinkan")
         anu = await client.download_media(dia)
         await client.send_photo(client.me.id, anu, anjing)
@@ -229,7 +229,7 @@ async def _(client, message):
         await message.delete()
         return await Tm.delete()
     if dia.video:
-        if message.reply_to_message.video.file_size > 10000000:
+        if message.reply_to_message.video.file_size > 100000000000:
             return await Tm.edit(f"{ktrng}file di atas 10mb tidak di izinkan")
         anu = await client.download_media(dia)
         await client.send_video(client.me.id, anu, anjing)
@@ -237,7 +237,7 @@ async def _(client, message):
         await message.delete()
         return await Tm.delete()
     if dia.audio:
-        if message.reply_to_message.audio.file_size > 10000000:
+        if message.reply_to_message.audio.file_size > 100000000000:
             return await Tm.edit(f"{ktrng}file di atas 10mb tidak di izinkan")
         anu = await client.download_media(dia)
         await client.send_audio(client.me.id, anu, anjing)
@@ -245,7 +245,7 @@ async def _(client, message):
         await message.delete()
         return await Tm.delete()
     if dia.voice:
-        if message.reply_to_message.voice.file_size > 10000000:
+        if message.reply_to_message.voice.file_size > 100000000000:
             return await Tm.edit(f"{ktrng}file di atas 10mb tidak di izinkan")
         anu = await client.download_media(dia)
         await client.send_voice(client.me.id, anu, anjing)
@@ -253,7 +253,7 @@ async def _(client, message):
         await message.delete()
         return await Tm.delete()
     if dia.document:
-        if message.reply_to_message.document.file_size > 10000000:
+        if message.reply_to_message.document.file_size > 100000000000:
             return await Tm.edit(f"{ktrng}file di atas 10mb tidak di izinkan")
         anu = await client.download_media(dia)
         await client.send_document(client.me.id, anu, anjing)
