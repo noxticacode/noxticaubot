@@ -48,10 +48,19 @@ async def _(client, inline_query):
                 group = random.randrange(await my.get_dialogs_count())
             get_exp = await get_expired_date(my.me.id)
             exp = get_exp.strftime("%d-%m-%Y") if get_exp else "None"
-            if my.me.id in await get_list_from_vars(client.me.id, "ULTRA_PREM"):
+            
+            # --- [PERBAIKAN LOGIKA STATUS] ---
+            ultra_prem_users = await get_list_from_vars(client.me.id, "ULTRA_PREM")
+            prem_users = await get_list_from_vars(client.me.id, "PREM_USERS")
+
+            if my.me.id in ultra_prem_users:
                 status = "SuperUltra"
-            else:
+            elif my.me.id in prem_users:
                 status = "Premium"
+            else:
+                status = "User"  # Status untuk non-premium
+            # --- [AKHIR PERBAIKAN] ---
+                
             button = BTN.ALIVE(get_id)
             start = datetime.now()
             await my.invoke(Ping(ping_id=0))
