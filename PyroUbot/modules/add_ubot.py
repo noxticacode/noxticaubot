@@ -442,13 +442,15 @@ async def _(client, message):
 
 @PY.CALLBACK("ress_ubot")
 async def _(client, callback_query):
-    if callback_query.from_user.id not in ubot._get_my_id:
+    user_id = callback_query.from_user.id
+    
+    if user_id not in ubot._get_my_id:
         return await callback_query.answer(
             f"you don't have acces",
             True,
         )
     
-    # --- PERBAIKAN: Cek premium sebelum restart ---
+    # --- [PERBAIKAN KUNCI] Cek status premium/trial SEBELUM restart ---
     premium_users, ultra_premium_users, trial_users = (
         await get_list_from_vars(client.me.id, "PREM_USERS"),
         await get_list_from_vars(client.me.id, "ULTRA_PREM"),
@@ -456,20 +458,21 @@ async def _(client, callback_query):
     )
     
     is_premium = (
-        callback_query.from_user.id in premium_users
-        or callback_query.from_user.id in ultra_premium_users
-        or callback_query.from_user.id in trial_users
+        user_id in premium_users
+        or user_id in ultra_premium_users
+        or user_id in trial_users
     )
     
+    # JIKA TIDAK PREMIUM -> BLOKIR
     if not is_premium:
-         return await callback_query.answer(
-            "Akun anda sudah tidak premium, silahkan hubungi admin.",
+        return await callback_query.answer(
+            "Akun anda sudah tidak premium. Silahkan hubungi admin.",
             True,
         )
     # --- AKHIR PERBAIKAN ---
 
     for X in ubot._ubot:
-        if callback_query.from_user.id == X.me.id:
+        if user_id == X.me.id:
             for _ubot_ in await get_userbots():
                 if X.me.id == int(_ubot_["name"]):
                     try:
@@ -490,13 +493,15 @@ async def _(client, callback_query):
 @PY.BOT("restart")
 async def _(client, message):
     msg = await message.reply("<b>✮ ᴛᴜɴɢɢᴜ sᴇʙᴇɴᴛᴀʀ</b>")
-    if message.from_user.id not in ubot._get_my_id:
+    user_id = message.from_user.id
+    
+    if user_id not in ubot._get_my_id:
         return await msg.edit(
             f"you don't have acces",
             True,
         )
         
-    # --- PERBAIKAN: Cek premium sebelum restart ---
+    # --- [PERBAIKAN KUNCI] Cek status premium/trial SEBELUM restart ---
     premium_users, ultra_premium_users, trial_users = (
         await get_list_from_vars(client.me.id, "PREM_USERS"),
         await get_list_from_vars(client.me.id, "ULTRA_PREM"),
@@ -504,19 +509,20 @@ async def _(client, message):
     )
     
     is_premium = (
-        message.from_user.id in premium_users
-        or message.from_user.id in ultra_premium_users
-        or message.from_user.id in trial_users
+        user_id in premium_users
+        or user_id in ultra_premium_users
+        or user_id in trial_users
     )
     
+    # JIKA TIDAK PREMIUM -> BLOKIR
     if not is_premium:
          return await msg.edit(
-            "Akun anda sudah tidak premium, silahkan hubungi admin.",
+            "Akun anda sudah tidak premium. Silahkan hubungi admin.",
         )
     # --- AKHIR PERBAIKAN ---
         
     for X in ubot._ubot:
-        if message.from_user.id == X.me.id:
+        if user_id == X.me.id:
             for _ubot_ in await get_userbots():
                 if X.me.id == int(_ubot_["name"]):
                     try:
