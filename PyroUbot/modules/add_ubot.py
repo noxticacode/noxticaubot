@@ -43,6 +43,36 @@ async def _(client, message):
 @PY.CALLBACK("bahan")
 async def _(client, callback_query):
     user_id = callback_query.from_user.id
+
+    # --- PERBAIKAN LOGIKA: Cek status premium/trial DULU ---
+    premium_users, ultra_premium_users, trial_users = (
+        await get_list_from_vars(client.me.id, "PREM_USERS"),
+        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
+        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
+    )
+    
+    is_premium = (
+        user_id in premium_users
+        or user_id in ultra_premium_users
+        or user_id in trial_users
+    )
+
+    # 2. JIKA TIDAK PREMIUM (atau trial) -> Tampilkan pesan bayar/policy
+    # Ini akan menangkap pengguna yang sudah di-unprem
+    if not is_premium:
+        buttons = [
+            [InlineKeyboardButton("⦪ ʟᴀɴᴊᴜᴛᴋᴀɴ ⦫", callback_data="bayar_dulu")],
+            [InlineKeyboardButton("⦪ ᴋᴇᴍʙᴀʟɪ ⦫", callback_data=f"home {user_id}")],
+        ]
+        return await callback_query.edit_message_text(
+            MSG.POLICY(),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+
+    # 3. JIKA PREMIUM (atau trial) -> Baru cek status bot
+    
+    # Cek apakah sudah punya bot
     if user_id in ubot._get_my_id:
         buttons = [
             [InlineKeyboardButton("⦪ ʀᴇꜱᴛᴀʀᴛ ⦫", callback_data=f"ress_ubot")],
@@ -50,11 +80,13 @@ async def _(client, callback_query):
         ]
         return await callback_query.edit_message_text(
             f"""
-<blockquote><b>⌭ ᴀɴᴅᴀ ꜱᴜᴅᴀʜ ᴍᴇᴍʙᴜᴀᴛ ᴜꜱᴇʀʙᴏᴛ\n\n⌭ ᴊɪᴋᴀ ᴜꜱᴇʀʙᴏᴛ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ʙɪꜱᴀ ᴅɪɢᴜɴᴀᴋᴀɴ ꜱɪʟᴀʜᴋᴀɴ ᴛᴇᴋᴇɴ ᴛᴏᴍʙᴏʟ ʀᴇꜱᴛᴀʀᴛ ᴅɪ ᴀᴛᴀꜱ</b></blockquote>
+<blockquote><b>⌭ ᴀɴᴅᴀ ꜱᴜᴅᴀʜ ᴍᴇᴍʙᴜᴀᴛ ᴜꜱᴇʀʙᴏᴛ\n\n⌭ ᴊɪᴋᴀ ᴜꜱᴇʀʙᴏᴛ ᴀɴᴅᴀ ᴛɪᴅᴀᴋ ʙɪꜱᴀ ᴅɪɢᴜɴᴀᴋᴀɴ ꜱɪʟᴀʜᴋᴀɴ ᴛᴇᴋᴇɴ ᴛᴏᴍʙᴏʟ ʀᴇꜱᴛᴀRᴛ ᴅɪ ᴀᴛᴀꜱ</b></blockquote>
 """,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
+    
+    # Cek kuota MAX_BOT
     elif len(ubot._ubot) + 1 > MAX_BOT:
         buttons = [
             [InlineKeyboardButton("ᴋᴇᴍʙᴀʟɪ", callback_data=f"home {user_id}")],
@@ -70,17 +102,8 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-    premium_users, ultra_premium_users = await get_list_from_vars(client.me.id, "PREM_USERS"), await get_list_from_vars(client.me.id, "ULTRA_PREM")
-    if user_id not in premium_users and user_id not in ultra_premium_users:
-        buttons = [
-            [InlineKeyboardButton("⦪ ʟᴀɴᴊᴜᴛᴋᴀɴ ⦫", callback_data="bayar_dulu")],
-            [InlineKeyboardButton("⦪ ᴋᴇᴍʙᴀʟɪ ⦫", callback_data=f"home {user_id}")],
-        ]
-        return await callback_query.edit_message_text(
-            MSG.POLICY(),
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
+        
+    # 4. JIKA PREMIUM tapi belum punya bot -> Lanjut buat
     else:
         buttons = [[InlineKeyboardButton("⦪ ʟᴀɴᴊᴜᴛᴋᴀɴ ⦫", callback_data="buat_ubot")]]
         return await callback_query.edit_message_text(
@@ -129,6 +152,38 @@ async def _(client, callback_query):
 @PY.CALLBACK("buat_ubot")
 async def _(client, callback_query):
     user_id = callback_query.from_user.id
+
+    # --- PERBAIKAN LOGIKA: Cek status premium/trial DULU ---
+    premium_users, ultra_premium_users, trial_users = (
+        await get_list_from_vars(client.me.id, "PREM_USERS"),
+        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
+        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
+    )
+    
+    is_premium = (
+        user_id in premium_users
+        or user_id in ultra_premium_users
+        or user_id in trial_users
+    )
+
+    # 2. JIKA TIDAK PREMIUM (atau trial) -> Tampilkan pesan bayar
+    # Ini akan menangkap pengguna yang sudah di-unprem
+    if not is_premium:
+        buttons = [
+            [InlineKeyboardButton("⦪ ʙᴇʟɪ ᴜꜱᴇʀʙᴏᴛ ⦫", callback_data="bahan")],
+            [InlineKeyboardButton("⦪ ᴋᴇᴍʙᴀʟɪ ⦫", callback_data=f"home {user_id}")],
+        ]
+        return await callback_query.edit_message_text(
+            f"""
+<blockquote><b>✮ ᴍᴀᴀꜰ ᴀɴᴅᴀ ʙᴇʟᴜᴍ ᴍᴇᴍʙᴇʟɪ ᴜꜱᴇʀʙᴏᴛ, ꜱɪʟᴀᴋᴀɴ ᴍᴇᴍʙᴇʟɪ ᴛᴇʀʟᴇʙɪʜ ᴅᴀʜᴜʟᴜ</b></blockquote>
+""",
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+
+    # 3. JIKA PREMIUM (atau trial) -> Baru cek status bot
+    
+    # Cek apakah sudah punya bot
     if user_id in ubot._get_my_id:
         buttons = [
             [InlineKeyboardButton("⦪ ʀᴇꜱᴛᴀʀᴛ ⦫", callback_data=f"ress_ubot")],
@@ -141,6 +196,8 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
+
+    # Cek kuota MAX_BOT
     elif len(ubot._ubot) + 1 > MAX_BOT:
         buttons = [
             [InlineKeyboardButton("ᴋᴇᴍʙᴀʟɪ", callback_data=f"home {user_id}")],
@@ -156,32 +213,8 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-    
-    # CEK PREMIUM DAN TRIAL SEBELUMNYA
-    premium_users, ultra_premium_users, trial_users = (
-        await get_list_from_vars(client.me.id, "PREM_USERS"),
-        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
-        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
-    )
-    
-    # JIKA TIDAK ADA DI KETIGANYA, SURUH BAYAR
-    if (
-        user_id not in premium_users
-        and user_id not in ultra_premium_users
-        and user_id not in trial_users
-    ):
-        buttons = [
-            [InlineKeyboardButton("⦪ ʙᴇʟɪ ᴜꜱᴇʀʙᴏᴛ ⦫", callback_data="bahan")],
-            [InlineKeyboardButton("⦪ ᴋᴇᴍʙᴀʟɪ ⦫", callback_data=f"home {user_id}")],
-        ]
-        return await callback_query.edit_message_text(
-            f"""
-<blockquote><b>✮ ᴍᴀᴀꜰ ᴀɴᴅᴀ ʙᴇʟᴜᴍ ᴍᴇᴍʙᴇʟɪ ᴜꜱᴇʀʙᴏᴛ, ꜱɪʟᴀᴋᴀɴ ᴍᴇᴍʙᴇʟɪ ᴛᴇʀʟᴇʙɪʜ ᴅᴀʜᴜʟᴜ</b></blockquote>
-""",
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(buttons),
-        )
-    # JIKA ADA, LANJUTKAN
+        
+    # 4. JIKA PREMIUM tapi belum punya bot -> Lanjut buat
     else:
         buttons = [[InlineKeyboardButton("⦪ ʟᴀɴᴊᴜᴛᴋᴀɴ ⦫", callback_data="add_ubot")]]
         return await callback_query.edit_message_text(
@@ -195,6 +228,7 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
+
 
 @PY.CALLBACK("bayar_dulu")
 async def _(client, callback_query):
@@ -327,8 +361,7 @@ async def _(client, callback_query):
         session_string=session_string,
     )
     
-    # --- PERBAIKAN DIMULAI DI SINI ---
-    # Cek dan hapus user dari PREM_USERS atau TRIAL_USERS_ID setelah berhasil
+    # --- PERBAIKAN: Hapus status premium atau trial setelah berhasil ---
     try:
         premium_users = await get_list_from_vars(client.me.id, "PREM_USERS")
         trial_users = await get_list_from_vars(client.me.id, "TRIAL_USERS")
@@ -414,6 +447,27 @@ async def _(client, callback_query):
             f"you don't have acces",
             True,
         )
+    
+    # --- PERBAIKAN: Cek premium sebelum restart ---
+    premium_users, ultra_premium_users, trial_users = (
+        await get_list_from_vars(client.me.id, "PREM_USERS"),
+        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
+        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
+    )
+    
+    is_premium = (
+        callback_query.from_user.id in premium_users
+        or callback_query.from_user.id in ultra_premium_users
+        or callback_query.from_user.id in trial_users
+    )
+    
+    if not is_premium:
+         return await callback_query.answer(
+            "Akun anda sudah tidak premium, silahkan hubungi admin.",
+            True,
+        )
+    # --- AKHIR PERBAIKAN ---
+
     for X in ubot._ubot:
         if callback_query.from_user.id == X.me.id:
             for _ubot_ in await get_userbots():
@@ -441,6 +495,26 @@ async def _(client, message):
             f"you don't have acces",
             True,
         )
+        
+    # --- PERBAIKAN: Cek premium sebelum restart ---
+    premium_users, ultra_premium_users, trial_users = (
+        await get_list_from_vars(client.me.id, "PREM_USERS"),
+        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
+        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
+    )
+    
+    is_premium = (
+        message.from_user.id in premium_users
+        or message.from_user.id in ultra_premium_users
+        or message.from_user.id in trial_users
+    )
+    
+    if not is_premium:
+         return await msg.edit(
+            "Akun anda sudah tidak premium, silahkan hubungi admin.",
+        )
+    # --- AKHIR PERBAIKAN ---
+        
     for X in ubot._ubot:
         if message.from_user.id == X.me.id:
             for _ubot_ in await get_userbots():
@@ -549,22 +623,23 @@ async def _(client, callback_query):
     trial_data = await get_list_from_vars(client.me.id, "TRIAL_USERS")
     if user_id in trial_data:
         return await callback_query.answer("❌ Anda sudah menggunakan trial sebelumnya!", True)
+        
+    # Check if user already premium
+    premium_users, ultra_premium_users = await get_list_from_vars(client.me.id, "PREM_USERS"), await get_list_from_vars(client.me.id, "ULTRA_PREM")
+    if user_id in premium_users or user_id in ultra_premium_users:
+        return await callback_query.answer("❌ Anda sudah menjadi pengguna premium!", True)
 
     # Check if max trial users reached
     max_trial = 50  # Maximum trial users
     if len(trial_data) >= max_trial:
         return await callback_query.answer("❌ Trial penuh, coba lagi nanti!", True)
 
-    # --- PERBAIKAN DI SINI ---
-    # Tambahkan user ke TRIAL_USERS SEKARANG, sebelum mereka klik tombol
+    # --- PERBAIKAN: Tambahkan user ke TRIAL_USERS ---
     await add_to_vars(client.me.id, "TRIAL_USERS", user_id)
-    # --- AKHIR PERBAIKAN ---
 
-    # Create trial userbot
     try:
         buttons = [
-            # --- PERBAIKAN DI SINI ---
-            # Arahkan tombol "Masukkan Nomor" ke callback "add_ubot"
+            # --- PERBAIKAN: Arahkan tombol ke 'add_ubot' ---
             [InlineKeyboardButton("📱 Masukkan Nomor", callback_data="add_ubot")],
             [InlineKeyboardButton("❌ Batal", callback_data="home")]
         ]
@@ -595,10 +670,8 @@ async def _(client, callback_query):
         )
 
     except Exception as e:
-        # --- PERBAIKAN DI SINI ---
         # Jika ada error, hapus user dari list trial agar bisa coba lagi
         await remove_from_vars(client.me.id, "TRIAL_USERS", user_id)
-        # --- AKHIR PERBAIKAN ---
         await callback_query.answer(f"❌ Error: {str(e)}", True)
 
 
