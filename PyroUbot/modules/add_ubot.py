@@ -156,8 +156,20 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-    premium_users, ultra_premium_users = await get_list_from_vars(client.me.id, "PREM_USERS"), await get_list_from_vars(client.me.id, "ULTRA_PREM")
-    if user_id not in premium_users and user_id not in ultra_premium_users:
+    
+    # CEK PREMIUM DAN TRIAL SEBELUMNYA
+    premium_users, ultra_premium_users, trial_users = (
+        await get_list_from_vars(client.me.id, "PREM_USERS"),
+        await get_list_from_vars(client.me.id, "ULTRA_PREM"),
+        await get_list_from_vars(client.me.id, "TRIAL_USERS"),
+    )
+    
+    # JIKA TIDAK ADA DI KETIGANYA, SURUH BAYAR
+    if (
+        user_id not in premium_users
+        and user_id not in ultra_premium_users
+        and user_id not in trial_users
+    ):
         buttons = [
             [InlineKeyboardButton("⦪ ʙᴇʟɪ ᴜꜱᴇʀʙᴏᴛ ⦫", callback_data="bahan")],
             [InlineKeyboardButton("⦪ ᴋᴇᴍʙᴀʟɪ ⦫", callback_data=f"home {user_id}")],
@@ -169,6 +181,7 @@ async def _(client, callback_query):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
+    # JIKA ADA, LANJUTKAN
     else:
         buttons = [[InlineKeyboardButton("⦪ ʟᴀɴᴊᴜᴛᴋᴀɴ ⦫", callback_data="add_ubot")]]
         return await callback_query.edit_message_text(
@@ -313,7 +326,22 @@ async def _(client, callback_query):
         api_hash=API_HASH,
         session_string=session_string,
     )
-#    await remove_from_vars(client.me.id, "PREM_USERS", user_id)
+    
+    # --- PERBAIKAN DIMULAI DI SINI ---
+    # Cek dan hapus user dari PREM_USERS atau TRIAL_USERS_ID setelah berhasil
+    try:
+        premium_users = await get_list_from_vars(client.me.id, "PREM_USERS")
+        trial_users = await get_list_from_vars(client.me.id, "TRIAL_USERS")
+
+        if user_id in premium_users:
+            await remove_from_vars(client.me.id, "PREM_USERS", user_id)
+        elif user_id in trial_users:
+            # User trial juga dihapus agar tidak bisa buat lagi
+            await remove_from_vars(client.me.id, "TRIAL_USERS", user_id)
+    except Exception as e:
+        print(f"Gagal menghapus user dari list premium/trial: {e}")
+    # --- AKHIR PERBAIKAN ---
+    
     for mod in loadModule():
         importlib.reload(importlib.import_module(f"PyroUbot.modules.{mod}"))
     SH = await ubot.get_prefix(new_client.me.id)
@@ -527,10 +555,17 @@ async def _(client, callback_query):
     if len(trial_data) >= max_trial:
         return await callback_query.answer("❌ Trial penuh, coba lagi nanti!", True)
 
+    # --- PERBAIKAN DI SINI ---
+    # Tambahkan user ke TRIAL_USERS SEKARANG, sebelum mereka klik tombol
+    await add_to_vars(client.me.id, "TRIAL_USERS", user_id)
+    # --- AKHIR PERBAIKAN ---
+
     # Create trial userbot
     try:
         buttons = [
-            [InlineKeyboardButton("📱 Masukkan Nomor", callback_data=f"start_trial {user_id}")],
+            # --- PERBAIKAN DI SINI ---
+            # Arahkan tombol "Masukkan Nomor" ke callback "add_ubot"
+            [InlineKeyboardButton("📱 Masukkan Nomor", callback_data="add_ubot")],
             [InlineKeyboardButton("❌ Batal", callback_data="home")]
         ]
 
@@ -560,30 +595,14 @@ async def _(client, callback_query):
         )
 
     except Exception as e:
+        # --- PERBAIKAN DI SINI ---
+        # Jika ada error, hapus user dari list trial agar bisa coba lagi
+        await remove_from_vars(client.me.id, "TRIAL_USERS", user_id)
+        # --- AKHIR PERBAIKAN ---
         await callback_query.answer(f"❌ Error: {str(e)}", True)
 
 
-@PY.CALLBACK("start_trial")
-async def _(client, callback_query):
-    user_id = int(callback_query.data.split()[1])
-
-    if callback_query.from_user.id != user_id:
-        return await callback_query.answer("❌ Tombol ini bukan untuk Anda!", True)
-
-    # Start trial userbot creation process
-    await callback_query.edit_message_text(
-        "<b>📱 TRIAL USERBOT</b>\n\n"
-        "Kirim nomor telepon Anda dengan format:\n"
-        "<code>+628xxxxxxxxx</code>\n\n"
-        "Pastikan nomor aktif dan bisa menerima SMS!",
-        reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("❌ Batal", callback_data="home")]
-        ])
-    )
-
-    # Set user state for trial
-    await add_to_vars(client.me.id, "TRIAL_USERS", user_id)
-    await set_vars(client.me.id, "TRIAL_STATE", f"waiting_phone_{user_id}")
+# --- FUNGSI start_trial DIHAPUS ---
 
 
 @PY.BOT("test")
