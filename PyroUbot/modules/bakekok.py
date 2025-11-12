@@ -2,6 +2,7 @@
 
 from PyroUbot import *
 import asyncio
+import os  # <-- Penting untuk menghapus file
 
 __MODULE__ = "ʙᴀᴋᴇᴋᴏᴋ"
 __HELP__ = """
@@ -12,13 +13,15 @@ perintah : <code>{0}bakekok</code> [id_channel/group]
     
 Noted:
 Proses ini mungkin memakan waktu lama tergantung jumlah media di target.
-Pastikan akun userbot Anda telah bergabung ke channel/group target.</blockquote>
+Pastikan akun userbot Anda telah bergabung ke channel/group target.
+<b>Modul ini menggunakan metode unduh-unggah untuk melewati batasan forward.</b></blockquote>
 """
 
 @PY.UBOT("bakekok")
 async def bakekok_command(client, message):
     """
     Menyalin semua media dari chat target ke chat saat ini.
+    Menggunakan metode download-upload untuk bypass forward restrictions.
     """
     ggl = await EMO.GAGAL(client)
     sks = await EMO.BERHASIL(client)
@@ -31,15 +34,13 @@ async def bakekok_command(client, message):
 
     # Tentukan ID target
     try:
-        # Coba konversi ke integer (untuk ID chat -100...)
         target_chat_id = int(args)
     except ValueError:
-        # Jika gagal, anggap sebagai username (untuk @username)
         target_chat_id = args
 
     # Beri pesan status awal
     try:
-        status_msg = await message.edit(f"{prs} Memulai proses menyalin media dari <code>{target_chat_id}</code>...\n\nIni mungkin butuh waktu lama.")
+        status_msg = await message.edit(f"{prs} Memulai proses menyalin media dari <code>{target_chat_id}</code>...\n\nMetode: <b>Download & Upload</b> (Untuk bypass restriksi).\nIni akan jauh lebih lambat.")
     except Exception as e:
         await message.edit(f"{ggl} **Error:** Tidak dapat mengakses chat. Pastikan ID/username benar dan userbot Anda telah bergabung.\n\n<code>{e}</code>")
         return
@@ -51,24 +52,57 @@ async def bakekok_command(client, message):
         # Iterasi melalui seluruh riwayat chat dari target
         async for msg in client.get_chat_history(target_chat_id):
             total_checked += 1
+            caption = msg.caption or None
             
-            # Cek apakah pesan adalah media yang diminta (foto, video, gif/animasi, berkas/dokumen, audio, voice)
-            if msg.photo or msg.video or msg.animation or msg.document or msg.audio or msg.voice:
-                try:
-                    # Salin pesan ke chat tempat perintah dieksekusi
-                    await msg.copy(message.chat.id)
+            # Cek media dan gunakan metode download-upload
+            try:
+                if msg.photo:
+                    anu = await client.download_media(msg)
+                    await client.send_photo(message.chat.id, anu, caption)
+                    os.remove(anu)
+                    copied_count += 1
+                
+                elif msg.video:
+                    anu = await client.download_media(msg)
+                    await client.send_video(message.chat.id, anu, caption)
+                    os.remove(anu)
                     copied_count += 1
                     
-                    # Tambahkan jeda 1 detik untuk menghindari FloodWait
-                    await asyncio.sleep(1) 
-                    
-                except Exception as e:
-                    # Jika gagal menyalin (mungkin karena FloodWait), jeda 5 detik
-                    print(f"Gagal menyalin pesan {msg.id}: {e}")
-                    await asyncio.sleep(5) # Jeda lebih lama jika terjadi error
+                elif msg.animation: # Untuk GIF
+                    anu = await client.download_media(msg)
+                    await client.send_animation(message.chat.id, anu, caption)
+                    os.remove(anu)
+                    copied_count += 1
 
-            # Update status setiap 100 pesan yang diperiksa
-            if total_checked % 100 == 0:
+                elif msg.document:
+                    anu = await client.download_media(msg)
+                    await client.send_document(message.chat.id, anu, caption)
+                    os.remove(anu)
+                    copied_count += 1
+                    
+                elif msg.audio:
+                    anu = await client.download_media(msg)
+                    await client.send_audio(message.chat.id, anu, caption)
+                    os.remove(anu)
+                    copied_count += 1
+                    
+                elif msg.voice:
+                    anu = await client.download_media(msg)
+                    await client.send_voice(message.chat.id, anu) # Pesan suara tidak punya caption
+                    os.remove(anu)
+                    copied_count += 1
+                
+                # Tambahkan jeda 2 detik setelah operasi berhasil
+                if msg.media:
+                     await asyncio.sleep(2) # Beri jeda lebih lama karena proses download/upload berat
+
+            except Exception as e:
+                # Jika gagal (misal file terlalu besar atau error lain), log dan lanjutkan
+                print(f"Gagal memproses pesan {msg.id}: {e}")
+                await asyncio.sleep(5) # Jeda lebih lama jika terjadi error
+
+            # Update status setiap 20 pesan (karena prosesnya lambat)
+            if total_checked % 20 == 0:
                 await status_msg.edit(f"{prs} Memeriksa...\n\nTotal Pesan Diperiksa: {total_checked}\nTotal Media Disalin: {copied_count}")
 
         # Kirim pesan sukses setelah selesai
