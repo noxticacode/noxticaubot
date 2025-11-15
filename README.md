@@ -1,10 +1,10 @@
 # PyroUbot
 
 <div align="center">
-  <img src="https://img.shields.io/github/stars/IbraDecode/PyroUbot?style=for-the-badge&logo=github" alt="Stars">
-  <img src="https://img.shields.io/github/forks/IbraDecode/PyroUbot?style=for-the-badge&logo=github" alt="Forks">
-  <img src="https://img.shields.io/github/issues/IbraDecode/PyroUbot?style=for-the-badge&logo=github" alt="Issues">
-  <img src="https://img.shields.io/github/license/IbraDecode/PyroUbot?style=for-the-badge&logo=github" alt="License">
+  <img src="https://img.shields.io/github/stars/noxticacode/noxticaubot?style=for-the-badge&logo=github" alt="Stars">
+  <img src="https://img.shields.io/github/forks/noxticacode/noxticaubot?style=for-the-badge&logo=github" alt="Forks">
+  <img src="https://img.shields.io/github/issues/noxticacode/noxticaubot?style=for-the-badge&logo=github" alt="Issues">
+  <img src="https://img.shields.io/github/license/noxticacode/noxticaubot?style=for-the-badge&logo=github" alt="License">
   <br>
   <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python" alt="Python">
   <img src="https://img.shields.io/badge/Pyrogram-2.0+-red?style=for-the-badge&logo=telegram" alt="Pyrogram">
@@ -45,8 +45,8 @@ PyroUbot adalah bot Telegram yang powerful dan multifungsi yang dibangun menggun
 
 ```bash
 # Clone repository
-git clone https://github.com/IbraDecode/PyroUbot.git
-cd PyroUbot
+git clone https://github.com/noxticacode/noxticaubot.git
+cd noxticaubot
 
 # Install dependencies
 pip install -r requirements.txt
@@ -136,8 +136,8 @@ sudo apt install mongodb -y
 
 ```bash
 # Clone repository
-git clone https://github.com/IbraDecode/PyroUbot.git
-cd PyroUbot
+git clone https://github.com/noxticacode/noxticaubot.git
+cd noxticaubot
 
 # Buat virtual environment
 python3 -m venv venv
@@ -539,7 +539,7 @@ Kami sangat menghargai kontribusi dari komunitas untuk pengembangan PyroUbot.
 ### Cara Berkontribusi
 
 1. Fork repository ini
-2. Clone fork Anda: `git clone https://github.com/username/PyroUbot.git`
+2. Clone fork Anda: `git clone https://github.com/username/noxticaubot.git`
 3. Buat branch fitur: `git checkout -b feature/AmazingFeature`
 4. Commit perubahan: `git commit -m 'Add some AmazingFeature'`
 5. Push ke branch: `git push origin feature/AmazingFeature`
@@ -576,8 +576,8 @@ Kami sangat menghargai kontribusi dari komunitas untuk pengembangan PyroUbot.
 
 Terima kasih kepada semua yang telah berkontribusi!
 
-<a href="https://github.com/IbraDecode/PyroUbot/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=IbraDecode/PyroUbot" />
+<a href="https://github.com/noxticacode/noxticaubot/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=noxticacode/noxticaubot" />
 </a>
 
 ---
@@ -668,7 +668,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install python3.10 python3.10-venv mongodb nodejs -y
 
 # Clone and setup
-git clone https://github.com/IbraDecode/PyroUbot.git
+git clone https://github.com/noxticacode/noxticaubot.git
 cd PyroUbot
 pip install -r requirements.txt
 npm install -g uglify-js
@@ -755,7 +755,7 @@ PyroUbot didistribusikan di bawah lisensi MIT License.
 ```
 MIT License
 
-Copyright (c) 2024 Ibra Decode
+Copyright (c) 2024 Noxtica
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -802,10 +802,10 @@ Pengguna bertanggung jawab penuh atas penggunaan bot ini.
 
 Jika ada pertanyaan, masalah, atau ingin berdiskusi tentang PyroUbot:
 
-- **Telegram Group**: [PyroUbot Community](https://t.me/pyroubot_grup) - Tempat diskusi, support, dan update
-- **GitHub Issues**: [Report Bug](https://github.com/IbraDecode/PyroUbot/issues) - Laporkan bug atau request fitur
-- **GitHub Discussions**: [Q&A](https://github.com/IbraDecode/PyroUbot/discussions) - Tanya jawab dan diskusi
-- **Email**: ibradecode@gmail.com - Contact developer
+- **Telegram Group**: [Noxtica Community](https://t.me/noxtic) - Tempat diskusi, support, dan update
+- **GitHub Issues**: [Report Bug](https://github.com/noxticacode/noxticaubot/issues) - Laporkan bug atau request fitur
+- **GitHub Discussions**: [Q&A](https://github.com/noxticacode/noxticaubot/discussions) - Tanya jawab dan diskusi
+- **Email**: noxtica@gmail.com - Contact developer
 
 ### Community Guidelines
 
@@ -903,8 +903,8 @@ A: Lihat bagian "API Reference" di README ini. Juga cek Pyrogram documentation.
 
 ### Contributing to Roadmap
 Fitur apa yang ingin Anda lihat di PyroUbot? Berikan masukan di:
-- [GitHub Discussions](https://github.com/IbraDecode/PyroUbot/discussions)
-- [Telegram Group](https://t.me/pyroubot_grup)
+- [GitHub Discussions](https://github.com/noxticacode/noxticaubot/discussions)
+- [Telegram Channel](https://t.me/noxtica)
 
 ---
 
@@ -1081,44 +1081,15 @@ python3 -c "import pyrogram, pytgcalls, motor; print('Deps OK')"
 
 ---
 
-## Project Statistics
 
-### GitHub Stats
-[![GitHub stars](https://img.shields.io/github/stars/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/network)
-[![GitHub issues](https://img.shields.io/github/issues/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/pulls)
 
-### Activity
-[![GitHub last commit](https://img.shields.io/github/last-commit/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/commits)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/commits)
-[![Contributors](https://img.shields.io/github/contributors/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot/graphs/contributors)
-
-### Code Quality
-[![Code size](https://img.shields.io/github/languages/code-size/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot)
-[![Repository size](https://img.shields.io/github/repo-size/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot)
-[![Lines of code](https://img.shields.io/tokei/lines/github/IbraDecode/PyroUbot?style=flat-square)](https://github.com/IbraDecode/PyroUbot)
-
-### Community
-- **Telegram Group**: 500+ members
-- **GitHub Stars**: Growing community
-- **Contributors**: Active development team
-- **Users**: Thousands of active installations
-
-### Technology Stack
-- **Primary Language**: Python 97.8%
-- **Framework**: Pyrogram, PyTgCalls
-- **Database**: MongoDB
-- **Deployment**: Docker, VPS, Cloud
-
----
 
 ## Community & Ecosystem
 
 ### Official Channels
-- **Telegram Group**: [PyroUbot Community](https://t.me/pyroubot_grup)
-- **GitHub**: [Repository](https://github.com/IbraDecode/PyroUbot)
-- **Website**: Coming soon
+- **Telegram Channel**: [Noxtica Community](https://t.me/noxtica)
+- **GitHub**: [Repository (https://github.com/noxticacode/noxticaubot)
+- **Website**: [Noxtica] (https://noxtica.web.id)
 - **Documentation**: This README
 
 ### Related Projects
@@ -1143,7 +1114,7 @@ python3 -c "import pyrogram, pytgcalls, motor; print('Deps OK')"
 
 ## Credits & Attribution
 
-Dibuat dengan dedikasi oleh Ibra Decode dan teman-teman yang telah berkontribusi.
+Dibuat dengan dedikasi oleh Noxtica dan teman-teman yang telah berkontribusi.
 
 ### Tim Pengembang
 
@@ -1171,11 +1142,11 @@ Dibuat dengan dedikasi oleh Ibra Decode dan teman-teman yang telah berkontribusi
 
 Jika Anda menyukai proyek ini, berikan star di GitHub!
 
-[![GitHub stars](https://img.shields.io/github/stars/IbraDecode/PyroUbot.svg?style=social&label=Star)](https://github.com/IbraDecode/PyroUbot)
-[![GitHub forks](https://img.shields.io/github/forks/IbraDecode/PyroUbot.svg?style=social&label=Fork)](https://github.com/IbraDecode/PyroUbot)
+[![GitHub stars](https://img.shields.io/github/stars/noxticacode/noxticaubot.svg?style=social&label=Star)](https://github.com/noxticacode/noxticaubot)
+[![GitHub forks](https://img.shields.io/github/forks/noxticacode/noxticaubot.svg?style=social&label=Fork)](https://github.com/noxticacode/noxticaubot)
 
 ---
 
-PyroUbot (c) 2024. Developed with passion in Indonesia
+PyroUbot (c) 2025. Developed with passion in Indonesia
 
 </div>
